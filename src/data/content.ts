@@ -1,313 +1,282 @@
-// All site copy lives here, in French (default) and English.
-// Edit this file to update the portfolio; the pages render from it.
-
+// English is served at /; French at /fr/. Counts refer to published write-ups.
 export type Lang = 'fr' | 'en';
-
 export const profile = {
-  name: 'Rayen Faleh',
-  email: 'ryan.elfaleh@gmail.com',
-  location: 'Nabeul, Tunisie',
+  name: 'Rayen Faleh', email: 'ryan.elfaleh@gmail.com',
+  location: { fr: 'Nabeul, Tunisie', en: 'Nabeul, Tunisia' },
   linkedin: 'https://www.linkedin.com/in/rayen-el-faleh-665a3a1bb',
   github: 'https://github.com/rayenelfaleh',
-  cv: 'CV_Rayen_Faleh.pdf',
+  writeups: 'https://github.com/rayenelfaleh/cybersec-writeups',
+  cv: { fr: 'CV_Rayen_Faleh.pdf', en: 'CV_Rayen_Faleh_EN.pdf' },
 };
-
+const reports = {
+  ad: `${profile.writeups}/blob/main/TryHackMe/Medium/VulnNet_Active-2026-06-10.md`,
+  web: `${profile.writeups}/blob/main/TryHackMe/Medium/Dogcat-2026-06-05.md`,
+};
 const fr = {
   meta: {
-    title: 'Rayen Faleh — Cybersécurité offensive & défensive',
-    description:
-      "Portfolio de Rayen Faleh, étudiant en Master Cybersécurité. Pentest, Active Directory, SOC/SIEM (Wazuh, Sysmon). À la recherche d'un stage PFE de 6 mois dès février 2027.",
+    title: 'Rayen Faleh — Stage PFE cybersécurité · Février 2027',
+    description: 'Étudiant en master cybersécurité à Nabeul. 16 write-ups de labs publics, cas Active Directory et web, développement Java EE chez Tunisie Telecom. Stage PFE de 6 mois dès février 2027.',
   },
-  nav: { about: 'Profil', skills: 'Compétences', projects: 'Projets', experience: 'Parcours', contact: 'Contact' },
-  switchLabel: 'EN',
-  switchHref: '',
+  nav: { about: 'Profil', skills: 'Compétences', projects: 'Cas concrets', experience: 'Parcours', contact: 'Contact' },
+  switchLabel: 'EN', switchHref: '',
   hero: {
-    status: 'Disponible pour un stage PFE · 6 mois · février 2027',
-    role: 'Étudiant en Master Cybersécurité',
-    tagline:
-      'Je casse des systèmes en laboratoire pour apprendre à mieux les défendre : tests d’intrusion, Active Directory et détection côté SOC.',
-    ctaContact: 'Me contacter',
-    ctaCv: 'Télécharger le CV',
+    status: 'Stage PFE recherché · 6 mois · dès février 2027',
+    role: 'Étudiant en master cybersécurité · Nabeul, Tunisie',
+    tagline: 'Je documente comment une attaque fonctionne et ce qu’une équipe de défense peut en apprendre. Mes preuves : 16 write-ups de labs publics et un stage de fin de licence en Java EE intégrant des contrôles de sécurité.',
+    ctaContact: 'Voir 3 cas concrets', ctaCv: 'Télécharger le CV (FR)',
+    briefTitle: 'En bref pour le recrutement',
+    brief: [
+      { label: 'Projet recherché', value: 'Tests d’intrusion et analyse défensive, avec encadrement.', href: '' },
+      { label: 'Point de départ', value: '2 labs publiés + 1 projet de stage à découvrir ci-dessous.', href: '#projects' },
+      { label: 'Langues', value: 'Arabe : maternelle · Français : courant · Anglais : courant à l’écrit, bonnes bases à l’oral.', href: '' },
+      { label: 'Contact direct', value: profile.email, href: `mailto:${profile.email}` },
+    ],
     stats: [
-      { value: '15', label: 'rooms TryHackMe & HackTheBox' },
-      { value: 'T1210', label: 'détection mappée MITRE ATT&CK' },
-      { value: 'MS17-010', label: 'chaîne EternalBlue de bout en bout' },
+      { value: '16', label: 'write-ups de labs publics · 14 TryHackMe + 2 HackTheBox', href: profile.writeups },
+      { value: 'AD & Web', label: 'des scénarios expliqués étape par étape', href: '#projects' },
+      { value: 'Java EE', label: 'des contrôles concrets d’authentification et de session', href: '#secure-development' },
+    ],
+  },
+  projects: {
+    title: 'Trois cas pour évaluer mon travail',
+    intro: 'Deux comptes rendus de laboratoires consultables et un projet de stage. Les exercices de sécurité sont réalisés en environnement d’entraînement.',
+    catalog: 'Pour aller plus loin : 16 write-ups publiés, dont 14 sur TryHackMe et 2 sur HackTheBox.',
+    catalogLink: 'Parcourir tous les comptes rendus',
+    items: [
+      {
+        id: 'active-directory', title: 'Active Directory : retracer une compromission',
+        summary: 'Comment un service exposé peut compromettre un serveur qui gère les comptes d’un domaine Windows.',
+        year: 'VulnNet: Active', kind: 'Lab publié', featured: true,
+        points: [
+          'Démarche : énumération Redis/SMB, capture et cassage d’identifiants, détournement d’un script partagé, élévation de privilèges jusqu’à SYSTEM.',
+          'Restitution : chaîne d’attaque documentée, avec pistes côté défense — restreindre Redis, surveiller les connexions SMB sortantes et protéger les scripts planifiés.',
+        ],
+        tags: ['Active Directory', 'Windows', 'Responder', 'Hashcat', 'Remédiation'],
+        link: reports.ad, linkLabel: 'Lire le cas Active Directory',
+      },
+      {
+        id: 'web-security', title: 'Sécurité web : d’un paramètre à une exécution de code',
+        summary: 'Suivre une faille dans une page PHP jusqu’à ses conséquences sur le système.',
+        year: 'Dogcat', kind: 'Lab publié', featured: false,
+        points: [
+          'Démarche : inclusion locale de fichiers (LFI), contournement de filtre et empoisonnement des journaux Apache.',
+          'Résultat en laboratoire : exécution de code, élévation de privilèges Linux puis sortie d’un conteneur Docker, étapes et commandes documentées.',
+        ],
+        tags: ['PHP', 'LFI', 'Linux', 'Docker', 'Élévation de privilèges'],
+        link: reports.web, linkLabel: 'Lire le cas de sécurité web',
+      },
+      {
+        id: 'secure-development', title: 'Développement : protéger l’authentification',
+        summary: 'Un PFE de licence chez Tunisie Telecom pour relier développement web et contrôles de sécurité.',
+        year: 'Fév. – juil. 2025', kind: 'Stage · code non publié ici', featured: false,
+        points: [
+          'Application web de gestion de l’assurance maladie des employés : Java EE (JSP/Servlets), MySQL et JDBC/DAO, avec espaces Administrateur et Employé distincts.',
+          'Contrôles intégrés : requêtes préparées dans l’authentification, validation des entrées côté serveur, hachage BCrypt, réinitialisation par e-mail et invalidation des sessions à la déconnexion.',
+        ],
+        tags: ['Java EE', 'MySQL', 'BCrypt', 'Validation serveur', 'Sessions'],
+        link: profile.cv.fr, linkLabel: 'Consulter les détails dans le CV (FR)',
+      },
     ],
   },
   about: {
-    title: 'Profil',
+    title: 'Ce que je peux apporter à un stage',
     body: [
-      'Étudiant en Master cybersécurité à la Faculté Leaders Nabeul, titulaire d’une Licence en sciences de l’informatique de la Faculté des Sciences de Tunis.',
-      'Je pratique intensivement le pentest et les opérations défensives (SOC/SIEM) dans mon home lab ainsi que sur TryHackMe et HackTheBox. Je recherche un stage de fin d’études de 6 mois à partir de février 2027, sur un périmètre offensif comme défensif.',
+      'Je suis étudiant en master cybersécurité à la Faculté Leaders Nabeul, après une licence en sciences de l’informatique à la Faculté des Sciences de Tunis.',
+      'Avec l’encadrement de votre équipe, je souhaite contribuer à des tests d’intrusion, à l’analyse de scénarios d’attaque et à la rédaction de constats exploitables : étapes reproductibles, preuves et pistes de remédiation.',
+      'Mes labs développent ma compréhension des attaques ; mon expérience Java EE m’aide à les relier aux contrôles applicatifs. La détection Wazuh/Sysmon et la mise en correspondance MITRE ATT&CK relèvent de ma pratique personnelle en laboratoire.',
     ],
     facts: [
       { k: 'Localisation', v: 'Nabeul, Tunisie' },
-      { k: 'Disponibilité', v: 'Février 2027' },
-      { k: 'Durée', v: 'Stage PFE · 6 mois' },
-      { k: 'Langues', v: 'Arabe · Français · Anglais' },
+      { k: 'Formation actuelle', v: 'Master cybersécurité · en cours' },
+      { k: 'Pratique sécurité', v: 'Labs personnels et CTF' },
+      { k: 'Expérience en entreprise', v: 'Développement web et assistance technique' },
     ],
   },
   skills: {
-    title: 'Compétences techniques',
+    title: 'Compétences reliées à des exemples',
     groups: [
       {
-        name: 'Sécurité offensive',
-        icon: 'target',
-        items: ['Tests d’intrusion', 'nmap', 'Énumération SMB', 'Metasploit', 'EternalBlue / MS17-010', 'PrivEsc Linux & Windows', 'SUID & capabilities', 'Détournement de PATH'],
+        name: 'Tests d’intrusion en laboratoire', icon: 'target',
+        context: 'Reconnaissance, exploitation et élévation de privilèges Linux/Windows dans des exercices documentés.',
+        items: ['Nmap', 'Metasploit', 'Impacket', 'Evil-WinRM', 'Hashcat', 'Active Directory'],
+        link: reports.ad, linkLabel: 'Voir un exemple Active Directory',
       },
       {
-        name: 'Exploitation web',
-        icon: 'globe',
-        items: ['LFI / RFI', 'Injection SQL', 'Injection de commandes', 'Upload non filtré', 'Gobuster', 'Burp Suite', 'John', 'Hydra'],
+        name: 'Sécurité web', icon: 'globe',
+        context: 'Comprendre une chaîne d’exploitation et rendre ses étapes vérifiables dans un compte rendu.',
+        items: ['LFI', 'Injection SQL', 'Failles d’upload', 'Gobuster', 'PHP', 'Linux'],
+        link: reports.web, linkLabel: 'Voir un exemple web',
       },
       {
-        name: 'Active Directory',
-        icon: 'network',
-        items: ['Kerbrute', 'AS-REP roasting', 'DCSync', 'Pass-the-hash', 'Impacket', 'evil-winrm', 'Reverse shells', 'Pivoting SSH'],
+        name: 'Développement et contrôles de sécurité', icon: 'terminal',
+        context: 'Contrôles d’authentification mis en œuvre pendant mon PFE de licence.',
+        items: ['Java EE', 'MySQL', 'JDBC/DAO', 'BCrypt', 'Validation serveur', 'Sessions'],
+        link: '#secure-development', linkLabel: 'Voir le projet de stage',
       },
       {
-        name: 'Défense / SOC',
-        icon: 'shield',
-        items: ['SIEM', 'Wazuh', 'Sysmon', 'MITRE ATT&CK', 'Corrélation détection', 'Rapports de pentest'],
-      },
-      {
-        name: 'Environnements & outils',
-        icon: 'terminal',
-        items: ['Python', 'Bash', 'Kali Linux', 'Windows Server', 'Docker', 'VMware / VirtualBox', 'ESXi', 'Sophos · VPN SSL', 'Obsidian', 'AWS Cloud Quest'],
-      },
-    ],
-  },
-  projects: {
-    title: 'Projets & laboratoires',
-    items: [
-      {
-        title: 'Laboratoire de tests d’intrusion & détection',
-        year: '2026',
-        kind: 'Home lab',
-        featured: true,
-        points: [
-          'Environnement virtualisé sous ESXi : Kali Linux, Windows Server 2025, pare-feu Sophos avec VPN SSL.',
-          'Chaîne d’exploitation EternalBlue (MS17-010) menée de bout en bout sur une cible Windows 7, avec rédaction d’un rapport de pentest formel.',
-          'Mise en correspondance des exercices offensifs avec des règles de détection Wazuh/Sysmon (MITRE ATT&CK T1210).',
-        ],
-        tags: ['ESXi', 'Kali', 'Sophos', 'Metasploit', 'Wazuh', 'Sysmon', 'ATT&CK'],
-      },
-      {
-        title: 'Write-ups CTF',
-        year: 'En continu',
-        kind: 'GitHub',
-        link: 'https://github.com/rayenelfaleh',
-        linkLabel: 'Voir sur GitHub',
-        points: [
-          'Portfolio de write-ups publié sur GitHub, documenté via un flux de travail Obsidian → GitHub.',
-          '15 rooms TryHackMe et HackTheBox (Easy et Medium), dont un environnement Active Directory complet.',
-        ],
-        tags: ['TryHackMe', 'HackTheBox', 'Active Directory', 'Obsidian'],
-      },
-      {
-        title: 'Smart Recycling Tunisie',
-        year: '2025',
-        kind: 'Data science',
-        points: [
-          'Démarche CRISP-DM : prévision Holt-Winters, Random Forest et segmentation K-Means.',
-          'Conteneurisation Docker d’une application Next.js 15.',
-        ],
-        tags: ['CRISP-DM', 'Random Forest', 'K-Means', 'Docker', 'Next.js'],
+        name: 'Détection et environnement de lab', icon: 'shield',
+        context: 'Pratique personnelle : SIEM Wazuh, Sysmon et correspondance avec MITRE ATT&CK ; infrastructure ESXi, Kali Linux et Sophos/VPN SSL.',
+        items: ['Wazuh', 'Sysmon', 'MITRE ATT&CK', 'ESXi', 'Kali Linux', 'Sophos'],
+        link: '#active-directory', linkLabel: 'Voir les pistes défensives du cas AD',
       },
     ],
   },
   experience: {
-    title: 'Parcours',
-    workTitle: 'Expérience professionnelle',
-    eduTitle: 'Formation',
+    title: 'Parcours', workTitle: 'Expérience professionnelle', eduTitle: 'Formation',
     work: [
-      {
-        role: 'Monteur vidéo & assistant technique',
-        org: 'Almourabi E-learning',
-        period: 'Avr. 2026 – sept. 2026',
-        points: [
-          'Montage de 10 à 18 vidéos pédagogiques par jour, jusqu’à 22 en période de pic, sous Camtasia et CapCut, de la récupération des enregistrements Zoom à la publication sur la plateforme.',
-          'Assistance aux formateurs sur site : préparation du matériel (PC, tablettes) et résolution des incidents pendant les cours.',
-        ],
-      },
-      {
-        role: 'Stage de Projet de Fin d’Études (PFE)',
-        org: 'Tunisie Telecom, Nabeul',
-        period: '2025',
-        points: [
-          'Développement d’une application web de gestion d’assurance maladie.',
-          'Mise en place de l’authentification et du contrôle d’accès.',
-          'Sécurisation des formulaires et des données utilisateurs ; gestion des sessions et des mots de passe, selon les bonnes pratiques de développement sécurisé.',
-        ],
-      },
+      { role: 'Monteur vidéo & assistant technique', org: 'Almourabi E-learning', period: 'Avr. – sept. 2026', points: ['10 à 18 vidéos pédagogiques montées par jour, jusqu’à 22 ; préparation du matériel et résolution des incidents pendant les cours.'] },
+      { role: 'Stagiaire développeur web — PFE de licence', org: 'Tunisie Telecom · Nabeul', period: 'Fév. – juil. 2025', points: ['Application de gestion de l’assurance maladie des employés en Java EE/MySQL.', 'Authentification, validation serveur, mots de passe et sessions : contrôles présentés dans le cas de développement ci-dessus.'] },
     ],
     education: [
-      { degree: 'Master en Informatique — Spécialisation Cybersécurité', school: 'Faculté Leaders Nabeul', period: '2025 – 2027', note: 'En cours' },
-      { degree: 'Licence en Sciences de l’Informatique', school: 'Faculté des Sciences de Tunis', period: '2021 – 2025' },
+      { degree: 'Master en informatique — Spécialisation cybersécurité', school: 'Faculté Leaders Nabeul', period: '2025 – 2027', note: 'En cours' },
+      { degree: 'Licence en sciences de l’informatique', school: 'Faculté des Sciences de Tunis', period: '2021 – 2025' },
     ],
     languagesTitle: 'Langues',
     languages: [
-      { name: 'Arabe', level: 'Langue maternelle', pct: 100 },
-      { name: 'Français', level: 'Courant (écrit et oral)', pct: 90 },
-      { name: 'Anglais', level: 'Courant à l’écrit, bonnes bases à l’oral', pct: 75 },
+      { name: 'Arabe', level: 'Langue maternelle' },
+      { name: 'Français', level: 'Courant' },
+      { name: 'Anglais', level: 'Courant à l’écrit, bonnes bases à l’oral' },
     ],
   },
   contact: {
-    title: 'Travaillons ensemble',
-    body: 'Vous recrutez un stagiaire PFE en cybersécurité pour février 2027, côté red team, blue team ou les deux ? Écrivez-moi.',
-    email: 'Envoyer un e-mail',
+    title: 'Parlons de votre stage PFE',
+    body: 'Vous avez un sujet en tests d’intrusion, sécurité applicative ou analyse défensive ? Envoyez-moi le périmètre et les attentes de votre équipe pour échanger sur une contribution adaptée à mon niveau.',
+    email: 'Proposer un échange',
   },
   footer: 'Conçu avec Astro.',
 };
-
 type Content = typeof fr;
-
 const en: Content = {
   meta: {
-    title: 'Rayen Faleh — Offensive & Defensive Security',
-    description:
-      'Portfolio of Rayen Faleh, cybersecurity master’s student. Pentesting, Active Directory, SOC/SIEM (Wazuh, Sysmon). Looking for a 6-month final-year internship starting February 2027.',
+    title: 'Rayen Faleh — Cybersecurity internship · February 2027',
+    description: 'Cybersecurity master’s student in Nabeul, Tunisia. 16 public lab write-ups, Active Directory and web cases, Java EE development at Tunisie Telecom. Seeking a 6-month final-year internship from February 2027.',
   },
-  nav: { about: 'About', skills: 'Skills', projects: 'Projects', experience: 'Background', contact: 'Contact' },
-  switchLabel: 'FR',
-  switchHref: 'fr/',
+  nav: { about: 'Profile', skills: 'Skills', projects: 'Selected work', experience: 'Background', contact: 'Contact' },
+  switchLabel: 'FR', switchHref: 'fr/',
   hero: {
-    status: 'Open to a final-year internship · 6 months · Feb 2027',
-    role: 'Cybersecurity Master’s Student',
-    tagline:
-      'I break systems in the lab to learn how to defend them better: penetration testing, Active Directory and SOC-side detection.',
-    ctaContact: 'Get in touch',
-    ctaCv: 'Download CV (FR)',
+    status: 'Seeking a 6-month final-year internship · from February 2027',
+    role: 'Cybersecurity master’s student · Nabeul, Tunisia',
+    tagline: 'I document how attacks work and what defenders can learn. My evidence: 16 public lab write-ups and a Java EE internship implementing application security controls.',
+    ctaContact: 'See 3 selected cases', ctaCv: 'Download CV (EN)',
+    briefTitle: 'Recruiter brief',
+    brief: [
+      { label: 'Opportunity sought', value: 'Supervised penetration testing and defensive analysis.', href: '' },
+      { label: 'Start here', value: '2 published labs + 1 internship project below.', href: '#projects' },
+      { label: 'Languages', value: 'Arabic: native · French: fluent · English: fluent in writing, good basic speaking skills.', href: '' },
+      { label: 'Direct contact', value: profile.email, href: `mailto:${profile.email}` },
+    ],
     stats: [
-      { value: '15', label: 'TryHackMe & HackTheBox rooms' },
-      { value: 'T1210', label: 'detection mapped to MITRE ATT&CK' },
-      { value: 'MS17-010', label: 'end-to-end EternalBlue chain' },
-    ],
-  },
-  about: {
-    title: 'About',
-    body: [
-      'Master’s student in cybersecurity at Faculté Leaders Nabeul, with a Bachelor’s in Computer Science from the Faculty of Sciences of Tunis.',
-      'I practice pentesting and defensive operations (SOC/SIEM) intensively in my home lab and on TryHackMe and HackTheBox. I’m looking for a 6-month final-year internship starting February 2027, on offensive or defensive scope.',
-    ],
-    facts: [
-      { k: 'Location', v: 'Nabeul, Tunisia' },
-      { k: 'Available', v: 'February 2027' },
-      { k: 'Length', v: 'Internship · 6 months' },
-      { k: 'Languages', v: 'Arabic · French · English' },
-    ],
-  },
-  skills: {
-    title: 'Technical skills',
-    groups: [
-      {
-        name: 'Offensive security',
-        icon: 'target',
-        items: ['Penetration testing', 'nmap', 'SMB enumeration', 'Metasploit', 'EternalBlue / MS17-010', 'Linux & Windows PrivEsc', 'SUID & capabilities', 'PATH hijacking'],
-      },
-      {
-        name: 'Web exploitation',
-        icon: 'globe',
-        items: ['LFI / RFI', 'SQL injection', 'Command injection', 'Unrestricted upload', 'Gobuster', 'Burp Suite', 'John', 'Hydra'],
-      },
-      {
-        name: 'Active Directory',
-        icon: 'network',
-        items: ['Kerbrute', 'AS-REP roasting', 'DCSync', 'Pass-the-hash', 'Impacket', 'evil-winrm', 'Reverse shells', 'SSH pivoting'],
-      },
-      {
-        name: 'Defense / SOC',
-        icon: 'shield',
-        items: ['SIEM', 'Wazuh', 'Sysmon', 'MITRE ATT&CK', 'Detection correlation', 'Pentest reporting'],
-      },
-      {
-        name: 'Environments & tools',
-        icon: 'terminal',
-        items: ['Python', 'Bash', 'Kali Linux', 'Windows Server', 'Docker', 'VMware / VirtualBox', 'ESXi', 'Sophos · SSL VPN', 'Obsidian', 'AWS Cloud Quest'],
-      },
+      { value: '16', label: 'public lab write-ups · 14 TryHackMe + 2 HackTheBox', href: profile.writeups },
+      { value: 'AD & Web', label: 'attack paths explained step by step', href: '#projects' },
+      { value: 'Java EE', label: 'concrete authentication and session controls', href: '#secure-development' },
     ],
   },
   projects: {
-    title: 'Projects & labs',
+    title: 'Three cases to judge my work',
+    intro: 'Two lab reports you can read and one internship project. Security exercises are carried out in training environments.',
+    catalog: 'Explore the full collection: 16 published write-ups, including 14 TryHackMe and 2 HackTheBox reports.',
+    catalogLink: 'Browse all the write-ups',
     items: [
       {
-        title: 'Penetration testing & detection lab',
-        year: '2026',
-        kind: 'Home lab',
-        featured: true,
+        id: 'active-directory', title: 'Active Directory: tracing a compromise',
+        summary: 'How an exposed service can compromise a server that manages a Windows domain’s accounts.',
+        year: 'VulnNet: Active', kind: 'Published lab', featured: true,
         points: [
-          'Virtualized environment on ESXi: Kali Linux, Windows Server 2025, Sophos firewall with SSL VPN.',
-          'End-to-end EternalBlue (MS17-010) exploitation chain against a Windows 7 target, written up as a formal pentest report.',
-          'Mapped the offensive exercises to Wazuh/Sysmon detection rules (MITRE ATT&CK T1210).',
+          'Work: Redis/SMB enumeration, credential capture and cracking, shared-script hijacking, then privilege escalation to SYSTEM.',
+          'Report: a documented attack chain with defensive ideas — restrict Redis access, monitor outbound SMB connections and protect scheduled scripts.',
         ],
-        tags: ['ESXi', 'Kali', 'Sophos', 'Metasploit', 'Wazuh', 'Sysmon', 'ATT&CK'],
+        tags: ['Active Directory', 'Windows', 'Responder', 'Hashcat', 'Remediation'],
+        link: reports.ad, linkLabel: 'Read the Active Directory case',
       },
       {
-        title: 'CTF write-ups',
-        year: 'Ongoing',
-        kind: 'GitHub',
-        link: 'https://github.com/rayenelfaleh',
-        linkLabel: 'View on GitHub',
+        id: 'web-security', title: 'Web security: from a parameter to code execution',
+        summary: 'Following a flaw in a PHP page through to its consequences for the host system.',
+        year: 'Dogcat', kind: 'Published lab', featured: false,
         points: [
-          'Write-up portfolio published on GitHub, documented through an Obsidian → GitHub workflow.',
-          '15 TryHackMe and HackTheBox rooms (Easy and Medium), including a full Active Directory environment.',
+          'Work: local file inclusion (LFI), filter bypass and Apache log poisoning.',
+          'Lab result: code execution, Linux privilege escalation and a Docker container escape, with steps and commands documented.',
         ],
-        tags: ['TryHackMe', 'HackTheBox', 'Active Directory', 'Obsidian'],
+        tags: ['PHP', 'LFI', 'Linux', 'Docker', 'Privilege escalation'],
+        link: reports.web, linkLabel: 'Read the web security case',
       },
       {
-        title: 'Smart Recycling Tunisia',
-        year: '2025',
-        kind: 'Data science',
+        id: 'secure-development', title: 'Development: protecting authentication',
+        summary: 'A bachelor’s final-year internship at Tunisie Telecom connecting web development with application security controls.',
+        year: 'Feb – Jul 2025', kind: 'Internship · no public code linked', featured: false,
         points: [
-          'CRISP-DM approach: Holt-Winters forecasting, Random Forest and K-Means segmentation.',
-          'Containerized a Next.js 15 application with Docker.',
+          'Employee health insurance management web app: Java EE (JSP/Servlets), MySQL and JDBC/DAO, with separate Administrator and Employee areas.',
+          'Controls implemented: prepared statements in authentication, server-side input validation, BCrypt hashing, email password resets and session invalidation on logout.',
         ],
-        tags: ['CRISP-DM', 'Random Forest', 'K-Means', 'Docker', 'Next.js'],
+        tags: ['Java EE', 'MySQL', 'BCrypt', 'Input validation', 'Sessions'],
+        link: profile.cv.en, linkLabel: 'Read the internship details in my CV (EN)',
+      },
+    ],
+  },
+  about: {
+    title: 'What I could contribute during an internship',
+    body: [
+      'I’m studying for a cybersecurity master’s at Faculté Leaders Nabeul, after a Computer Science bachelor’s degree at Faculté des Sciences de Tunis.',
+      'With your team’s supervision, I want to contribute to penetration testing, attack-scenario analysis and clear findings: reproducible steps, evidence and remediation ideas.',
+      'My labs build an understanding of attack paths; my Java EE experience connects that work to application controls. Wazuh/Sysmon detection and MITRE ATT&CK mapping are part of my personal lab practice.',
+    ],
+    facts: [
+      { k: 'Location', v: 'Nabeul, Tunisia' },
+      { k: 'Current studies', v: 'Cybersecurity master’s · in progress' },
+      { k: 'Security practice', v: 'Personal labs and CTFs' },
+      { k: 'Work experience', v: 'Web development and technical support' },
+    ],
+  },
+  skills: {
+    title: 'Skills connected to examples',
+    groups: [
+      {
+        name: 'Lab-based penetration testing', icon: 'target',
+        context: 'Reconnaissance, exploitation and Linux/Windows privilege escalation in documented exercises.',
+        items: ['Nmap', 'Metasploit', 'Impacket', 'Evil-WinRM', 'Hashcat', 'Active Directory'],
+        link: reports.ad, linkLabel: 'See an Active Directory example',
+      },
+      {
+        name: 'Web security', icon: 'globe',
+        context: 'Understanding an exploitation chain and making its steps verifiable in a write-up.',
+        items: ['LFI', 'SQL injection', 'File upload flaws', 'Gobuster', 'PHP', 'Linux'],
+        link: reports.web, linkLabel: 'See a web example',
+      },
+      {
+        name: 'Development and security controls', icon: 'terminal',
+        context: 'Authentication controls implemented during my bachelor’s final-year internship.',
+        items: ['Java EE', 'MySQL', 'JDBC/DAO', 'BCrypt', 'Input validation', 'Sessions'],
+        link: '#secure-development', linkLabel: 'See the internship project',
+      },
+      {
+        name: 'Detection and lab environment', icon: 'shield',
+        context: 'Personal practice: Wazuh SIEM, Sysmon and MITRE ATT&CK mapping; an ESXi, Kali Linux and Sophos/SSL VPN environment.',
+        items: ['Wazuh', 'Sysmon', 'MITRE ATT&CK', 'ESXi', 'Kali Linux', 'Sophos'],
+        link: '#active-directory', linkLabel: 'See defensive ideas in the AD case',
       },
     ],
   },
   experience: {
-    title: 'Background',
-    workTitle: 'Experience',
-    eduTitle: 'Education',
+    title: 'Background', workTitle: 'Work experience', eduTitle: 'Education',
     work: [
-      {
-        role: 'Video editor & technical assistant',
-        org: 'Almourabi E-learning',
-        period: 'Apr 2026 – Sep 2026',
-        points: [
-          'Edited 10 to 18 educational videos a day, up to 22 at peak, in Camtasia and CapCut, from pulling Zoom recordings to publishing on the e-learning platform.',
-          'Supported trainers on site: prepared equipment (PCs, tablets) and resolved incidents during classes.',
-        ],
-      },
-      {
-        role: 'Final-year internship (PFE)',
-        org: 'Tunisie Telecom, Nabeul',
-        period: '2025',
-        points: [
-          'Built a web application for health insurance management.',
-          'Implemented authentication and access control.',
-          'Secured forms and user data; handled sessions and passwords following secure development practices.',
-        ],
-      },
+      { role: 'Video editor & technical assistant', org: 'Almourabi E-learning', period: 'Apr – Sep 2026', points: ['Edited 10–18 educational videos daily, up to 22; set up instructors’ equipment and resolved technical issues during classes.'] },
+      { role: 'Web development intern — bachelor’s final-year project', org: 'Tunisie Telecom · Nabeul', period: 'Feb – Jul 2025', points: ['Employee health insurance management app built with Java EE/MySQL.', 'Authentication, input validation, passwords and sessions: controls described in the development case above.'] },
     ],
     education: [
-      { degree: 'Master’s in Computer Science — Cybersecurity', school: 'Faculté Leaders Nabeul', period: '2025 – 2027', note: 'In progress' },
-      { degree: 'Bachelor’s in Computer Science', school: 'Faculty of Sciences of Tunis', period: '2021 – 2025' },
+      { degree: 'Master’s in Computer Science — Cybersecurity specialisation', school: 'Faculté Leaders Nabeul', period: '2025 – 2027', note: 'In progress' },
+      { degree: 'Bachelor’s degree in Computer Science', school: 'Faculté des Sciences de Tunis', period: '2021 – 2025' },
     ],
     languagesTitle: 'Languages',
     languages: [
-      { name: 'Arabic', level: 'Native', pct: 100 },
-      { name: 'French', level: 'Fluent (written and spoken)', pct: 90 },
-      { name: 'English', level: 'Fluent in writing, good spoken basics', pct: 75 },
+      { name: 'Arabic', level: 'Native' },
+      { name: 'French', level: 'Fluent' },
+      { name: 'English', level: 'Fluent in writing, good basic speaking skills' },
     ],
   },
   contact: {
-    title: 'Let’s work together',
-    body: 'Hiring a cybersecurity intern for February 2027, red team, blue team or both? Drop me a line.',
-    email: 'Send an email',
+    title: 'Let’s discuss your internship project',
+    body: 'Have a project in penetration testing, application security or defensive analysis? Send me the scope and your team’s expectations so we can discuss a contribution suited to my current level.',
+    email: 'Start a conversation',
   },
   footer: 'Built with Astro.',
 };
-
 export const content: Record<Lang, Content> = { fr, en };
