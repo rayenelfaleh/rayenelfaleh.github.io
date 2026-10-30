@@ -26,7 +26,7 @@ const year = new Date().getFullYear();
     <div class="container topbar-inner">
       <a href={lang === 'en' ? base : `${base}fr/`} class="brand" aria-label={profile.name}>
         <span class="brand-mark">&gt;_</span>
-        <span>rayen<span class="accent">.faleh</span></span>
+        <span>{profile.name}</span>
       </a>
       <nav class="nav" aria-label="Sections">
         {navItems.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
