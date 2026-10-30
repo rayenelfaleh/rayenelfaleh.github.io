@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
-import NetworkBackground from './NetworkBackground.astro';
 import { content, profile, type Lang } from '../data/content';
 
 interface Props {
@@ -23,9 +22,6 @@ const year = new Date().getFullYear();
 ---
 
 <Base lang={lang} title={t.meta.title} description={t.meta.description}>
-  <div class="grid-bg" aria-hidden="true"></div>
-  <NetworkBackground />
-
   <header class="topbar">
     <div class="container topbar-inner">
       <a href={lang === 'en' ? base : `${base}fr/`} class="brand" aria-label={profile.name}>
@@ -49,7 +45,7 @@ const year = new Date().getFullYear();
     <!-- Hero -->
     <section class="hero container">
       <div class="hero-copy reveal">
-        <p class="status"><span class="dot"></span>{t.hero.status}</p>
+        <p class="status">{t.hero.status}</p>
         <h1>{profile.name}</h1>
         <p class="role mono">{t.hero.role}</p>
         <p class="tagline">{t.hero.tagline}</p>
@@ -64,20 +60,15 @@ const year = new Date().getFullYear();
         </div>
       </div>
 
-      <aside class="terminal reveal" aria-label={t.hero.briefTitle}>
-        <div class="term-bar">
-          <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
-          <p>{t.hero.briefTitle}</p>
-        </div>
-        <div class="term-body" style="white-space: normal">
-          {t.hero.brief.map((item) => (
-            <p>
-              <span class="out">{item.label}</span><br />
-              {item.href ? <a href={item.href}>{item.value}</a> : item.value}
-            </p>
-          ))}
-        </div>
-      </aside>
+      <figure class="portrait reveal">
+        <img
+          src={`${base}rayen-portrait.jpg`}
+          alt={lang === 'fr' ? `Portrait de ${profile.name}` : `Portrait of ${profile.name}`}
+          width="460"
+          height="460"
+          fetchpriority="high"
+        />
+      </figure>
     </section>
 
     <section class="container stats reveal">
